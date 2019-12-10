@@ -2,19 +2,20 @@
 # UniFi Security Gateways and EdgeOS Package Updater
 # This script checks /config/data/install-packages/ for downloaded
 # packages and installs any that aren't installed
-#
+# 
 # Author: Neil Beadle
-
+# Modifications by Kolby:
+# Added a few lines to download the latest wireshare for ER release
+# Added reboot to the end to force a reboot after wireshark install
 
 downloads=/config/data/install-packages
 
 cd $downloads
 
+curl -LJO https://github.com/BSPDevelopers/edgeos-wireguard/raw/master/wireguard-v2.0-e50.deb
+
 for pkg in *; do
-  dpkg-query -W --showformat='${Status}\n' \
-  $(dpkg --info "${pkg}" | \
-  grep "Package: " | \
-  awk -F' ' '{ print $NF}') > /dev/null 2>&1 || dpkg -i ${pkg}
+  dpkg-query -W --showformat='${Status}\n' $(dpkg --info "wireguard-v2.0-e50-0.0.20191012-1.deb" | grep "Package: " | awk -F' ' '{ print $NF}') > /dev/null 2>&1 || dpkg -i ${pkg}; reboot now
 done
 
 cd -
