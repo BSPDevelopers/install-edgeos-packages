@@ -5,8 +5,8 @@
 # 
 # Author: Neil Beadle
 # Modifications by Kolby:
-# Added a few lines to download the latest wireshare for ER release
-# Added reboot to the end to force a reboot after wireshark install
+# Added lines to download the latest wireguard for ER release
+# Added reboot if a package gets installed
 
 downloads=/config/data/install-packages
 
